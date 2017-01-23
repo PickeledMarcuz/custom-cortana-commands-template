@@ -10,10 +10,8 @@ using Windows.System;
 using Windows.Media.SpeechRecognition;
 using Windows.ApplicationModel.Activation;
 
-// for SendSerialData example
-using Windows.Devices.SerialCommunication;
-using Windows.Devices.Enumeration;
-using Windows.Storage.Streams;
+
+/*crclayton was a great assist to the ideas behind this template */
 
 namespace CustomCortanaCommands
 {
@@ -33,9 +31,15 @@ namespace CustomCortanaCommands
             */
 
             {"OpenWebsite", (Action)(async () => {
-                 Uri website = new Uri(@"http://www.crclayton.com");
+                 Uri website = new Uri(@"https://vrvoicedemo.sharepoint.com");
                  await Launcher.LaunchUriAsync(website);
              })},
+
+            {"ListFiles", (Action)(async () =>
+            {
+                Uri website = new Uri(@"https://vrvoicedemo.sharepoint.com/Lists");
+                await Launcher.LaunchUriAsync(website);
+            })},
 
             {"OpenFile", (Action)(async () => {
                 StorageFile file = await Package.Current.InstalledLocation.GetFileAsync(@"Test.txt");
@@ -49,35 +53,6 @@ namespace CustomCortanaCommands
 
                 await storageFolder.GetFileAsync("NewFile.txt");
                 await FileIO.WriteTextAsync(sampleFile, "This file was created by Cortana at " + DateTime.Now);
-
-            })},
-
-            {"SendSerialData", (Action)(async () => {
-                string comPort = "COM3";
-                string serialMessage = "String sent to the COM port";
-
-                string selector = SerialDevice.GetDeviceSelector(comPort);
-                DeviceInformationCollection devices = await DeviceInformation.FindAllAsync(selector);
-
-                if(devices.Count == 0)
-                {
-                    MessageDialog popup = new MessageDialog($"No {comPort} device found.");
-                    await popup.ShowAsync();
-                    return;
-                }
-
-                DeviceInformation deviceInfo = devices[0];
-                SerialDevice serialDevice = await SerialDevice.FromIdAsync(deviceInfo.Id);
-                serialDevice.BaudRate = 9600;
-                serialDevice.DataBits = 8;
-                serialDevice.StopBits = SerialStopBitCount.Two;
-                serialDevice.Parity = SerialParity.None;
-
-                DataWriter dataWriter = new DataWriter(serialDevice.OutputStream);
-                dataWriter.WriteString(serialMessage);
-                await dataWriter.StoreAsync();
-                dataWriter.DetachStream();
-                dataWriter = null;
             })},
 
         };

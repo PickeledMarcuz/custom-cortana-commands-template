@@ -4,5 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CustomCortanaCommands"
     RequestedTheme="Light">
+    <!-- These wonderful 3 lines make O365 and the application speak to each other -->
+    <Application.Resources>
+        <x:String x:Key="ida:ClientId">a32b7476-596a-4e23-aa5f-7b037de0f6eb</x:String>
+        <x:String x:Key="ida:AADInstance">https://login.microsoftonline.com/</x:String>
+        <x:String x:Key="ida:Domain">vrvoicedemo.onmicrosoft.com</x:String>
+    </Application.Resources>
 
 </Application>

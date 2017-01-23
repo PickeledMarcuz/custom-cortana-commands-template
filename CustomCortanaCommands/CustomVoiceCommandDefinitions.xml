@@ -2,14 +2,26 @@
 
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="en-us" Name="CustomCommands">
-   <CommandPrefix> Listen Up </CommandPrefix>
+   <CommandPrefix> Sharepoint </CommandPrefix>
     <Example> Open File, Open Website </Example>
     
     <Command Name="OpenWebsite">
       <Example> Open website </Example>          
-      <ListenFor> Open website </ListenFor>    
+      <ListenFor> Open website </ListenFor>
+      <ListenFor> Open my site </ListenFor>
+      <ListenFor> Open the gates of valhalla </ListenFor>
       <Feedback> Opening your website </Feedback>
+     <!-- should we have the sites open within a foreground application or just leave it to use the Default Browser.-->
       <Navigate/>          
+    </Command>
+
+    <Command Name="ListFiles">
+      <Example> List files </Example>
+      <ListenFor> List files </ListenFor>
+      <ListenFor> List {SortOfFile} files</ListenFor>
+      <Feedback> Listing your files </Feedback>
+      <!-- We should probably create a navigation to a list within the UWP and then bring it to foreground -->
+      <Navigate/>
     </Command>
 
     <Command Name="OpenFile">
@@ -26,13 +38,13 @@
       <Navigate/>
     </Command>
 
-    <Command Name="SendSerialData">
-      <Example> Send serial data </Example>
-      <ListenFor> Send serial data </ListenFor>
-      <Feedback> Sending serial data </Feedback>
-      <Navigate/>
-    </Command>
-
+    <PhraseList Label="SortOfFile">
+      <Item>excel</Item>
+      <Item>powerpoint</Item>
+      <Item>visio</Item>
+      <Item>word</Item>
+      <Item>PDF</Item>
+    </PhraseList>
+    
   </CommandSet>  
-
 </VoiceCommands>
